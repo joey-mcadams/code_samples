@@ -1,4 +1,4 @@
-# PRE-REQS
+### PRE-REQS
 This script requires a file in the same directory called
 
 jira_cfg.json
@@ -14,11 +14,14 @@ The contents of that file should be:
 }
 ````
 
+### SETUP
+Run the `get_start_elk.sh` script to get the required docker container and start it. 
+
 ###  PORTS
-5601 (Kibana web interface).
+5601 - Kibana web interface.
 
-9200 (Elasticsearch JSON interface).
+9200 - Elasticsearch JSON interface.
 
-5044 (Logstash Beats interface, receives logs from Beats such as Filebeat – see the Forwarding logs with Filebeat section).
+5044 - Logstash Beats interface, receives logs from Beats such as Filebeat – see the Forwarding logs with Filebeat section.
 
 From: https://elk-docker.readthedocs.io/
