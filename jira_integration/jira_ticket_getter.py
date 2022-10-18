@@ -1,6 +1,7 @@
 import requests
 import os
 import json
+import logging
 from requests.auth import HTTPBasicAuth
 from elasticsearch import Elasticsearch
 from time import sleep
@@ -16,6 +17,8 @@ class JiraTicketGetter():
         self.project_key = config_dict.get('project_key')
         self.elastic_client = None
         self._connect_elastic()
+
+        self.logger = logging.getLogger()
 
     def _connect_elastic(self):
         """
@@ -109,14 +112,14 @@ class JiraTicketGetter():
         time_counter = 0
         loop_time = 10
         while(time_counter < run_for_seconds):
-            print("Getting new tickets.")
+            self.logger.info("Getting new tickets.")
             new_tickets = self.get_high_and_higher_tickets_beyond_last_ticket(self.project_key, most_recent_id)
             for ticket in new_tickets:
-                print(f"New tickets found, pushing to ElasticSearch. Ticket ID: {ticket.get('id')}")
+                self.logger.info(f"New tickets found, pushing to ElasticSearch. Ticket ID: {ticket.get('id')}")
                 self.elastic_client.index(index="jira_tickets", id=ticket.get("id"), document=ticket)
                 most_recent_id = ticket.get('id')  # These should come back in ascending order, the last one will be the most recent ID.
             else:
-                print(f"No new tickets found. Last ID was: {most_recent_id}")
+                self.logger.info(f"No new tickets found. Last ID was: {most_recent_id}")
             sleep(loop_time)
             time_counter += loop_time
 

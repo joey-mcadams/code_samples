@@ -37,4 +37,6 @@ Results can be viewed in Kibana with a simple graph (will be updated).
 
 5044 - Logstash Beats interface, receives logs from Beats such as Filebeat – see the Forwarding logs with Filebeat section.
 
+5000 - Flask
+
 From: https://elk-docker.readthedocs.io/

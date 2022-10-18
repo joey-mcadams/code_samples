@@ -3,8 +3,10 @@ import requests
 import os
 import json
 import sys
+import logging
 from random import randrange
 from requests.auth import HTTPBasicAuth
+
 
 
 class JiraTicketMaker():
@@ -15,6 +17,9 @@ class JiraTicketMaker():
         self.base_url = f"https://{config_dict.get('tenant')}.atlassian.net"
         self.project_key = config_dict.get('project_key')
         self.priorities = ["Highest", "High", "Medium", "Low", "Lowest"]
+
+        self.logger = logging.getLogger()
+
 
     def _read_config(self):
         """
@@ -101,14 +106,14 @@ class JiraTicketMaker():
         """
         total_tickets = 0
         while total_tickets < number_of_tickets:
-            print(f"Sending ticket {total_tickets}")
+            self.logger.info(f"Sending ticket {total_tickets}")
             new_ticket = self.create_random_ticket(self.project_key)
-            print(f"Ticket priority is: {new_ticket.get('fields').get('priority').get('name')}")
+            self.logger.info(f"Ticket priority is: {new_ticket.get('fields').get('priority').get('name')}")
             self.post_ticket_to_jira(new_ticket)
             total_tickets += 1
-            print(f"Ticket {total_tickets} sent!")
+            self.logger.info(f"Ticket {total_tickets} sent!")
             delay = randrange(20, 40)
-            print(f"Delay is: {delay}")
+            self.logger.info(f"Delay is: {delay}")
             time.sleep(delay)
 
 
