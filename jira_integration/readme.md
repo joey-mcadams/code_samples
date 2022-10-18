@@ -17,6 +17,19 @@ The contents of that file should be:
 ### SETUP
 Run the `get_start_elk.sh` script to get the required docker container and start it. 
 
+### TO USE (In progress)
+Run the following scripts. 
+
+`python3 jira_ticket_maker.py`
+
+In a separate terminal
+
+`python3 jira_ticket_getter.py`
+
+That will start feeding Jira random tickets and pushing the High and Highest tickets into the ELK container. 
+
+Results can be viewed in Kibana with a simple graph (will be updated). 
+
 ###  PORTS
 5601 - Kibana web interface.
 
