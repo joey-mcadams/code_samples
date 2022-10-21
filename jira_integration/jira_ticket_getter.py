@@ -6,9 +6,11 @@ from requests.auth import HTTPBasicAuth
 from elasticsearch import Elasticsearch
 from time import sleep
 
+logging.basicConfig(level = logging.INFO)
+
 
 # TODO: Make JiraConnectionBaseClass
-class JiraTicketGetter():
+class JiraTicketGetter:
     def __init__(self):
         config_dict = self._read_config()
 
@@ -63,6 +65,8 @@ class JiraTicketGetter():
         :return: An object containing all tickets.
         """
         url = f"{self.base_url}/rest/api/2/search"
+
+        # TODO: Externalize priorities
         params = {
             "jql": f"project = {project_name} AND id > {last_ticket_id} AND (priority = High OR priority = Highest) ORDER BY id ASC"
         }
@@ -111,7 +115,7 @@ class JiraTicketGetter():
         # I couldn't think of a good end condition. CTRL-C it is.
         time_counter = 0
         loop_time = 10
-        while(time_counter < run_for_seconds):
+        while time_counter < run_for_seconds:
             self.logger.info("Getting new tickets.")
             new_tickets = self.get_high_and_higher_tickets_beyond_last_ticket(self.project_key, most_recent_id)
             for ticket in new_tickets:

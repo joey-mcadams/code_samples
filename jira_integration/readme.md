@@ -16,6 +16,7 @@ The contents of that file should be:
 
 ### SETUP
 Run the `get_start_elk.sh` script to get the required docker container and start it. 
+Install requirements with `pip install -r requirements.txt`
 
 ### TO USE (In progress)
 Run the following scripts. 
@@ -30,7 +31,7 @@ That will start feeding Jira random tickets and pushing the High and Highest tic
 
 Results can be viewed in Kibana with a simple graph (will be updated). 
 
-###  PORTS
+### PORTS
 5601 - Kibana web interface.
 
 9200 - Elasticsearch JSON interface.
@@ -40,3 +41,16 @@ Results can be viewed in Kibana with a simple graph (will be updated).
 5000 - Flask
 
 From: https://elk-docker.readthedocs.io/
+
+### OUTPUT 
+It may take a minute or two for the first few tickets to hit the Elastic. The output should let you know when the 
+first high and higher tickets hit the queue. Once that happens, the end graph can be viewed here: 
+
+http://localhost:5000
+
+### RANDOM THOUGHTS / TODOS
+If writing this project again from start. Elastic, Jira, and Flask should all be client classes. It should 
+really be a 3 tier MVC style design.
+
+Many of the configuration options have been hard coded for speed. They should be externalized (ticket priority, speed 
+of ticket creation for examples)

@@ -7,6 +7,7 @@ import logging
 from random import randrange
 from requests.auth import HTTPBasicAuth
 
+logging.basicConfig(level=logging.INFO)
 
 
 class JiraTicketMaker():
@@ -18,8 +19,8 @@ class JiraTicketMaker():
         self.project_key = config_dict.get('project_key')
         self.priorities = ["Highest", "High", "Medium", "Low", "Lowest"]
 
+        logging.basicConfig()
         self.logger = logging.getLogger()
-
 
     def _read_config(self):
         """
@@ -112,13 +113,13 @@ class JiraTicketMaker():
             self.post_ticket_to_jira(new_ticket)
             total_tickets += 1
             self.logger.info(f"Ticket {total_tickets} sent!")
-            delay = randrange(20, 40)
+            delay = randrange(20, 40) # TODO: Externalize this
             self.logger.info(f"Delay is: {delay}")
             time.sleep(delay)
 
 
 if __name__ == "__main__":
-    number_of_tickets = 100
+    number_of_tickets = 1000
     try:
         number_of_tickets = sys.argv[1]
     except IndexError:

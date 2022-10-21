@@ -1,2 +1,4 @@
 elasticsearch==8.4.3
 docker==6.0.0
+matplotlib==3.6.1
+Flask==2.2.2
