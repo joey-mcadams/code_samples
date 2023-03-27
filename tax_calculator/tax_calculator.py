@@ -40,7 +40,7 @@ tax_brackets = {
 }
 
 
-def calculate_taxes_from_bracket(income: float, tax_brackets: list):
+def calculate_taxes_from_bracket(income: float, tax_brackets: list) -> float:
     tax_responsiblity = 0
     rolling_income_total = 0
 
@@ -50,11 +50,11 @@ def calculate_taxes_from_bracket(income: float, tax_brackets: list):
     for i, tax_bracket in enumerate(tax_brackets):
         if i == len(tax_brackets) - 1:  # At the last tax bracket
             tax_responsiblity += (income - rolling_income_total) * tax_bracket[1]
-        elif income < tax_bracket[0]:  # found out bracket
+        elif income < tax_bracket[0]:  # found actual bracket
             taxable_income = income - rolling_income_total
             tax_responsiblity += taxable_income * tax_bracket[1]
             break
-        else:
+        else:  # Too much, add the current tier and move on
             rolling_income_total += tax_bracket[0]
             tax_responsiblity += tax_bracket[0] * tax_bracket[1]
 
