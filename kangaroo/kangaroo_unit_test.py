@@ -6,7 +6,7 @@ class TestKangaroo(TestCase):
     def test_one(self):
         result = kangaroo(1, 1, 2, 2)
         self.assertEqual(result, "NO")
-
+        pass
     def test_two(self):
         result = kangaroo(1, 2, 3, 1)
         self.assertEqual(result, "YES")
