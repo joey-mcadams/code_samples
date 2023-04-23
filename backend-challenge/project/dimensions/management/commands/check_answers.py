@@ -6,12 +6,17 @@ from django.core.management.base import BaseCommand, CommandError
 from dimensions.challenge import list_children, list_hierarchy
 from dimensions.models import Company, Dimension
 
+import os
+
 
 class Command(BaseCommand):
     help = 'Checks output of list_children() and list_hierarchy()'
 
     def handle(self, *args, **options):
-        self.base_dir = 'dimensions/management/fixtures/'
+        real_path=os.path.dirname(os.path.realpath(__file__))
+        up_one = os.path.dirname(real_path)
+
+        self.base_dir = os.path.join(up_one, "fixtures")
 
         reset_queries()
         queries_before = len(connection.queries)
@@ -27,7 +32,9 @@ class Command(BaseCommand):
 
     def check_list_children(self):
         print('Checking list_children()...')
-        with open(f'{self.base_dir}list_children_expected.pickle', mode='rb') as f:
+        # with open(f'{self.base_dir}list_children_expected.pickle', mode='rb') as f:
+        file_path = os.path.join(self.base_dir, 'list_children_expected.pickle')
+        with open(file_path, mode='rb') as f:
             expecteds = pickle.load(f)
 
         num_correct = 0
@@ -42,7 +49,8 @@ class Command(BaseCommand):
 
     def check_list_hierarchy(self):
         print('Checking list_hierarchy()...')
-        with open(f'{self.base_dir}list_hierarchy_expected.pickle', mode='rb') as f:
+        file_path = os.path.join(self.base_dir, 'list_hierarchy_expected.pickle')
+        with open(file_path, mode='rb') as f:
             expected = pickle.load(f)
 
         response = list_hierarchy(1)

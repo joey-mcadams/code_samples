@@ -19,6 +19,20 @@ would you suggest?
 """
 
 
+"""
+TODO: Figure out how to run this with Django 
+
+with recursive parent(id, name, level) as (values (1, "ACCOUNT", 0)
+                                           union
+                                           select dimensions_dimension.id, dimensions_dimension.name, parent.level + 1
+                                           from dimensions_dimension,
+                                                parent
+                                           where dimensions_dimension.parent_id = parent.id
+                                           order by 1
+    ) select substr(".................", 1, level) || name from parent
+"""
+
+
 def list_children(dimension_id: int) -> list | None:
     """ List a dimension and all its children in a nested hierarchy. """
     dim_parent = Dimension.objects.get(id=dimension_id)
