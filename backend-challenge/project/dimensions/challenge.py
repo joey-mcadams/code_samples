@@ -18,24 +18,26 @@ would you suggest?
     But in the end, we're pretty much forced to use a SQL query with 'RECURSIVE'.  
 """
 
-
 """
-TODO: Figure out how to run this with Django 
+This is the query we need to run: 
 
-with recursive parent(id, name, level) as (values (1, "ACCOUNT", 0)
+with recursive parent(id, name, has_children, company_id, parent_id, level) as (
+                                           values (1, "ACCOUNT", 1, 1, 0, 0)
                                            union
-                                           select dimensions_dimension.id, dimensions_dimension.name, parent.level + 1
+                                           select dimensions_dimension.id, dimensions_dimension.name, dimensions_dimension.has_children, dimensions_dimension.company_id, dimensions_dimension.parent_id, parent.level + 1
                                            from dimensions_dimension,
                                                 parent
                                            where dimensions_dimension.parent_id = parent.id
                                            order by 1
-    ) select substr(".................", 1, level) || name from parent
+    ) select id, substr('..........', 1, level*3) || name, has_children, company_id, parent_id from parent;
+
 """
 
 
 def list_children(dimension_id: int) -> list | None:
     """ List a dimension and all its children in a nested hierarchy. """
     dim_parent = Dimension.objects.get(id=dimension_id)
+    dim_children = Dimension.objects.filter(parent_id__in=[DIme])
 
     if dim_parent.has_children:  # This will reduce the number of queries.
         return _get_children_from_parent(dim_parent, [], 0)
