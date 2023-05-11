@@ -37,7 +37,6 @@ with recursive parent(id, name, has_children, company_id, parent_id, level) as (
 def list_children(dimension_id: int) -> list | None:
     """ List a dimension and all its children in a nested hierarchy. """
     dim_parent = Dimension.objects.get(id=dimension_id)
-    dim_children = Dimension.objects.filter(parent_id__in=[DIme])
 
     if dim_parent.has_children:  # This will reduce the number of queries.
         return _get_children_from_parent(dim_parent, [], 0)
