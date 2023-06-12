@@ -19,5 +19,6 @@ def get_duplicates(arr):
     return max_dups, target_num
 
 
-print(get_duplicates(b))
 print(get_duplicates(a))
+print(get_duplicates(b))
+
