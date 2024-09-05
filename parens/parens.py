@@ -1,5 +1,5 @@
-# parens = "()()()()("
-parens = ")))((("
+parens = "()()()()("
+# parens = ")))((("
 
 first_pos = 0
 last_pos = 0
